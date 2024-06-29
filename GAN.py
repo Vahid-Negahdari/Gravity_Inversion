@@ -13,12 +13,12 @@ num_batch    = int(BIGG_BATCH/batch_size)
 lr           = 0.02
 n            = 51
 k            = 200
-semi         = int(np.ceil(2*n/8)*128)
+semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
 #########################################################
-Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Density = np.reshape(Density,[28000,n,n,1])
+Density = np.load(path / ('Density_Train.npy'), allow_pickle=True).astype('float32')
+Density = np.reshape(Density,[27000,n,n,1])
 Density = (Density-np.min(Density))/(np.max(Density)-np.min(Density))
 
 #########################################################
@@ -28,7 +28,7 @@ def conv(input, w, stride, dimention):
     if dimention == 1 :
        y = tf.nn.conv1d(input=input, filters=w, stride=stride,padding='SAME')
     else :
-       y = tf.nn.conv2d(input=input, filters=w, stride=stride, padding='SAME')
+       y = tf.nn.conv2d(input=input, filters=w, strides=stride, padding='SAME')
     y = tf.nn.leaky_relu(y)
     return y
 
@@ -109,8 +109,8 @@ def train_step(Real,lr):
     optimizer_G = tf.keras.optimizers.Adam(learning_rate=lr)
     optimizer_D = tf.keras.optimizers.Adam(learning_rate=lr)
 
-    Noise = np.random.normal(0,1,[batch_size,k] )
-    with tf.GradientTape() as tape:
+    Noise = np.random.normal(0,1,[batch_size,k] ).astype('float32')
+    with tf.GradientTape(persistent=True) as tape:
         Fake        = Generator(Noise)
         Real_output = Discriminator(Real)
         Fake_output = Discriminator(Fake)
