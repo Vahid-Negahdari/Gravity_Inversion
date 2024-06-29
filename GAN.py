@@ -10,7 +10,8 @@ train_epochs = 30
 batch_size   = 25
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
-lr           = 0.02
+lr1          = 0.005
+lr2          = 0.005
 n            = 51
 k            = 200
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
@@ -105,9 +106,9 @@ def Discriminator_loss(Real_output, Fake_output):
 
 #######################################################
 #######################################################
-def train_step(Real,lr):
-    optimizer_G = tf.keras.optimizers.Adam(learning_rate=lr)
-    optimizer_D = tf.keras.optimizers.Adam(learning_rate=lr)
+def train_step(Real,lr1,lr2):
+    optimizer_G = tf.keras.optimizers.Adam(learning_rate=lr1)
+    optimizer_D = tf.keras.optimizers.Adam(learning_rate=lr2)
 
     Noise = np.random.normal(0,1,[batch_size,k] ).astype('float32')
     with tf.GradientTape(persistent=True) as tape:
@@ -130,12 +131,12 @@ def train_step(Real,lr):
 for epoch in range(train_epochs):
       avg_Loss1 = 0
       avg_Loss2 = 0
-      if np.mod(epoch,2)==0:
-         lr=lr/2
+      if np.mod(epoch,4)==0:
+         lr1=lr1/2 ; lr2=lr2/2
 
       for s in range(num_batch):
           batch_u         = Density  [s * batch_size  : (s + 1) * batch_size ]
-          loss_g, loss_d  = train_step(batch_u,lr)
+          loss_g, loss_d  = train_step(batch_u,lr1,lr2)
           avg_Loss1 += loss_g / num_batch
           avg_Loss2 += loss_d / num_batch
       tf.print(" ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2) ; print("\n")
