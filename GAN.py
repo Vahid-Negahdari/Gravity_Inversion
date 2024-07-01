@@ -30,7 +30,7 @@ def conv(input, w, stride, dimention):
        y = tf.nn.conv1d(input=input, filters=w, stride=stride,padding='SAME')
     else :
        y = tf.nn.conv2d(input=input, filters=w, strides=stride, padding='SAME')
-    y = tf.nn.relu(y)
+    y = tf.nn.leaky_relu(y)
     return y
 
 
@@ -39,7 +39,7 @@ def deconv(input, w, strides, output, dimention):
        y = tf.nn.conv1d_transpose(input=input, filters=w, strides=strides, padding='SAME', output_shape=output)
     else:
        y = tf.nn.conv2d_transpose(input=input, filters=w, strides=strides, padding='SAME', output_shape=output)
-    y = tf.nn.relu(y)
+    y = tf.nn.leaky_relu(y)
     return y
 
 
