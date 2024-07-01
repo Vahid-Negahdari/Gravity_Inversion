@@ -13,7 +13,7 @@ num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
 lr2          = 0.0005
 n            = 51
-k            = 200
+k            = 50
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
@@ -102,7 +102,7 @@ def Discriminator_loss(Real_output, Fake_output):
     real_loss = cross_entropy(tf.ones_like(Real_output), Real_output)
     fake_loss = cross_entropy(tf.zeros_like(Fake_output), Fake_output)
     total_loss = real_loss + fake_loss
-    return real_loss,fake_loss,total_loss
+    return real_loss, fake_loss, total_loss
 
 #######################################################
 #######################################################
@@ -138,13 +138,14 @@ for epoch in range(train_epochs):
 
       for s in range(num_batch):
           batch_u         = Density  [s * batch_size  : (s + 1) * batch_size ]
-          loss_g, loss_d,loss_real,loss_fake  = train_step(batch_u,lr1,lr2)
+          loss_g, loss_d, loss_real, loss_fake  = train_step(batch_u,lr1,lr2)
           avg_Loss1 += loss_g / num_batch
           avg_Loss2 += loss_d / num_batch
           avg_Loss3 += loss_real / num_batch
           avg_Loss4 += loss_fake / num_batch
       print("--- On epoch {} ---".format(epoch))
-      tf.print(" ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2," ---Loss3:---", avg_Loss3, " ---Loss4:---",avg_Loss4) ; print("\n")
+      tf.print(" ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2," ---Loss3:---", avg_Loss3, " ---Loss4:---",avg_Loss4)
+      print("\n")
       # if (epoch % 3 == 0):
       #    Test_Score(epoch)
 
