@@ -102,7 +102,7 @@ def Discriminator_loss(Real_output, Fake_output):
     real_loss = cross_entropy(tf.ones_like(Real_output), Real_output)
     fake_loss = cross_entropy(tf.zeros_like(Fake_output), Fake_output)
     total_loss = real_loss + fake_loss
-    return total_loss
+    return real_loss,fake_loss,total_loss
 
 #######################################################
 #######################################################
@@ -116,13 +116,13 @@ def train_step(Real,lr1,lr2):
         Real_output = Discriminator(Real)
         Fake_output = Discriminator(Fake)
         Loss_G      = Generator_loss(Fake_output)
-        Loss_D      = Discriminator_loss(Real_output, Fake_output)
+        Loss_Real,Loss_Fake,Loss_D      = Discriminator_loss(Real_output, Fake_output)
 
     grad_G = tape.gradient(Loss_G, GenV )
     grad_D = tape.gradient(Loss_D, DiscV)
     optimizer_G.apply_gradients(zip(grad_G, GenV ))
     optimizer_D.apply_gradients(zip(grad_D, DiscV))
-    return Loss_G, Loss_D
+    return Loss_G, Loss_D, Loss_Real,Loss_Fake
 
 
 ################################################################
@@ -131,15 +131,19 @@ def train_step(Real,lr1,lr2):
 for epoch in range(train_epochs):
       avg_Loss1 = 0
       avg_Loss2 = 0
+      avg_Loss3 = 0
+      avg_Loss4 = 0
       if np.mod(epoch,4)==0:
          lr1=lr1/2 ; lr2=lr2/2
 
       for s in range(num_batch):
           batch_u         = Density  [s * batch_size  : (s + 1) * batch_size ]
-          loss_g, loss_d  = train_step(batch_u,lr1,lr2)
+          loss_g, loss_d,loss_real,loss_fake  = train_step(batch_u,lr1,lr2)
           avg_Loss1 += loss_g / num_batch
           avg_Loss2 += loss_d / num_batch
-      tf.print(" ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2) ; print("\n")
+          avg_Loss3 += loss_real / num_batch
+          avg_Loss4 += loss_fake / num_batch
+      tf.print(" ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2," ---Loss3:---", avg_Loss3, " ---Loss4:---",avg_Loss4) ; print("\n")
       # if (epoch % 3 == 0):
       #    Test_Score(epoch)
 
