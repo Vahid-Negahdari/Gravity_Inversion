@@ -6,14 +6,14 @@ path = Path('/home/cvl/Pycharm/Elastic_Scattering/Dataset')
 #########################################################
 # Define Hyperparameter
 #########################################################
-train_epochs = 30
+train_epochs = 45
 batch_size   = 25
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
 lr2          = 0.0005
 n            = 51
-k            = 100
+k            = 200
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
@@ -143,6 +143,7 @@ for epoch in range(train_epochs):
           avg_Loss2 += loss_d / num_batch
           avg_Loss3 += loss_real / num_batch
           avg_Loss4 += loss_fake / num_batch
+      print("--- On epoch {} ---".format(epoch))
       tf.print(" ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2," ---Loss3:---", avg_Loss3, " ---Loss4:---",avg_Loss4) ; print("\n")
       # if (epoch % 3 == 0):
       #    Test_Score(epoch)
