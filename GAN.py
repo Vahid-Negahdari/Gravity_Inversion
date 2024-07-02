@@ -63,8 +63,6 @@ GenV = GenV + [get_tfVariable([3,3,64,128]  , 'W0')]
 GenV = GenV + [get_tfVariable([3,3,32,64] , 'W1')]
 GenV = GenV + [get_tfVariable([3,3,1,32], 'W3')]
 
-
-
 DiscV = []
 DiscV = DiscV + [get_tfVariable([3,3,1,32]  , 'W0')]
 DiscV = DiscV + [get_tfVariable([3,3,32,64] , 'W1')]

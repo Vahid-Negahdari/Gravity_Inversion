@@ -16,7 +16,7 @@ num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
 lr2          = 0.0005
 n            = 51
-k            = 100
+k            = 50
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
