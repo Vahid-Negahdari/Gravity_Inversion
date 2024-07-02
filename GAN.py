@@ -1,12 +1,13 @@
 import tensorflow as tf
 import numpy as np
 from pathlib import Path
+import pickle
 
-path = Path('/home/cvl/Pycharm/Elastic_Scattering/Dataset')
+path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Define Hyperparameter
 #########################################################
-train_epochs = 45
+train_epochs = 35
 batch_size   = 20
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
@@ -149,3 +150,8 @@ for epoch in range(train_epochs):
       # if (epoch % 3 == 0):
       #    Test_Score(epoch)
 
+
+
+Noise = np.random.normal(0, 1, [1000, k]).astype('float32')
+Gen   = Generator(Noise)
+np.save(path / ('k100b20.npy'), Gen)
