@@ -7,7 +7,7 @@ path = Path('/home/cvl/Pycharm/Elastic_Scattering/Dataset')
 # Define Hyperparameter
 #########################################################
 train_epochs = 45
-batch_size   = 200
+batch_size   = 20
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
