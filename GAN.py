@@ -111,18 +111,18 @@ def train_step(Real,lr1,lr2):
     optimizer_D = tf.keras.optimizers.Adam(learning_rate=lr2)
 
     Noise = np.random.normal(0,1,[batch_size,k] ).astype('float32')
-    with tf.GradientTape(persistent=True) as g_tape , tf.GradientTape(persistent=True) as d_tape:
+    with tf.GradientTape() as g_tape , tf.GradientTape() as d_tape:
         Fake        = Generator(Noise)
         Real_output = Discriminator(Real)
         Fake_output = Discriminator(Fake)
         Loss_G      = Generator_loss(Fake_output)
-        Loss_Real,Loss_Fake,Loss_D      = Discriminator_loss(Real_output, Fake_output)
+        Loss_Real, Loss_Fake, Loss_D  = Discriminator_loss(Real_output, Fake_output)
 
     grad_G = g_tape.gradient(Loss_G, GenV )
     grad_D = d_tape.gradient(Loss_D, DiscV)
     optimizer_G.apply_gradients(zip(grad_G, GenV ))
     optimizer_D.apply_gradients(zip(grad_D, DiscV))
-    return Loss_G, Loss_D, Loss_Real,Loss_Fake
+    return Loss_G, Loss_D, Loss_Real, Loss_Fake
 
 
 ################################################################
