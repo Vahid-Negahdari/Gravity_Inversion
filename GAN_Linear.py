@@ -57,12 +57,8 @@ def get_tfVariable(shape, name):
     return tf.Variable(tf.keras.initializers.GlorotNormal(seed=14)(shape), name=name, trainable=True, dtype=tf.float32)
 
 GenV = []
-GenV = GenV + [get_tfVariable([k,int(np.ceil(n/8))*int(np.ceil(n/8))*128]    , 'W5')]
-GenV = GenV + [get_tfVariable([int(np.ceil(n/8))*int(np.ceil(n/8))*128]      , 'W6')]
-GenV = GenV + [get_tfVariable([3,3,64,128]  , 'W0')]
-GenV = GenV + [get_tfVariable([3,3,32,64] , 'W1')]
-GenV = GenV + [get_tfVariable([3,3,1,32], 'W3')]
-
+GenV = GenV + [get_tfVariable([n**2,k]    , 'W7')]
+GenV = GenV + [get_tfVariable([n**2]    , 'W8')]
 
 
 DiscV = []
@@ -77,11 +73,8 @@ DiscV = DiscV + [get_tfVariable([1]         , 'W6')]
 # Define Model
 ########################################################
 def Generator(u):
-    C = fullyConnected_layer(u, GenV[0], GenV[1])
-    C = tf.reshape(C, [C.shape[0], int(np.ceil(n/8)), int(np.ceil(n/8)), 128])
-    C = deconv(C, GenV[2], 2, [C.shape[0], int(np.ceil(n/4)), int(np.ceil(n/4)), 64], 2)
-    C = deconv(C, GenV[3], 2, [C.shape[0], int(np.ceil(n/2)), int(np.ceil(n/2)), 32], 2)
-    C = deconv(C, GenV[4], 2, [C.shape[0], n, n, 1], 2)
+    C = fullyConnected_layer(u, tf.transpose(GenV[0]), GenV[1])
+    C = tf.reshape(C, [C.shape[0],n,n,1])
     return C
 
 def Discriminator(u):
@@ -154,9 +147,9 @@ for epoch in range(train_epochs):
 
 
 
-Noise = np.random.normal(0, 1, [1000, k]).astype('float32')
-Gen   = Generator(Noise)
-np.save(path / ('k100b20.npy'), Gen)
+# Noise = np.random.normal(0, 1, [1000, k]).astype('float32')
+# Gen   = Generator(Noise)
+# np.save(path / ('k100b20.npy'), Gen)
 
 
 # ex=np.load('C:\Users\Vahid\Desktop\k100b20.npy')
