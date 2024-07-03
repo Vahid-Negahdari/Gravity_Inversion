@@ -161,5 +161,4 @@ np.save(path / ('k100b20.npy'), Gen)
 # for i in range(200):
 #         plt.imshow(ex[i])
 #         plt.savefig(str(i)  +'.png')
-#         plt.show()
 #         plt.close()
