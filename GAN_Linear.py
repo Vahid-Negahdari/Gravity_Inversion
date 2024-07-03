@@ -9,14 +9,14 @@ path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Define Hyperparameter
 #########################################################
-train_epochs = 50
+train_epochs = 40
 batch_size   = 20
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
 lr2          = 0.0005
 n            = 51
-k            = 102
+k            = 100
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
@@ -162,7 +162,7 @@ SAVE_WEIGHTS()
 
 
 
-# ex=np.load('C:\Users\Vahid\Desktop\k100b20.npy')
+# ex=np.load(r'C:\Users\Vahid\Desktop\k100b20.npy')
 # for i in range(200):
 #         plt.imshow(ex[i])
 #         plt.savefig(str(i)  +'.png')
