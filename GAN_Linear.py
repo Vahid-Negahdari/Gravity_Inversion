@@ -9,7 +9,7 @@ path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Define Hyperparameter
 #########################################################
-train_epochs = 35
+train_epochs = 50
 batch_size   = 20
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
