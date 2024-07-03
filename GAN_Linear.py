@@ -16,7 +16,7 @@ num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
 lr2          = 0.0005
 n            = 51
-k            = 50
+k            = 51
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
@@ -67,7 +67,6 @@ DiscV = DiscV + [get_tfVariable([3,3,32,64] , 'W1')]
 DiscV = DiscV + [get_tfVariable([3,3,64,128], 'W3')]
 DiscV = DiscV + [get_tfVariable([semi,1]    , 'W5')]
 DiscV = DiscV + [get_tfVariable([1]         , 'W6')]
-
 
 ########################################################
 # Define Model
@@ -147,9 +146,20 @@ for epoch in range(train_epochs):
 
 
 
-# Noise = np.random.normal(0, 1, [1000, k]).astype('float32')
-# Gen   = Generator(Noise)
-# np.save(path / ('k100b20.npy'), Gen)
+Noise = np.random.normal(0, 1, [1000, k]).astype('float32')
+Gen   = Generator(Noise)
+np.save(path / ('k100b20.npy'), Gen)
+
+
+def SAVE_WEIGHTS():
+    file_name = "Weights_Gen.pkl"
+    open_file = open(file_name, "wb")
+    pickle.dump(GenV, open_file)
+    open_file.close()
+
+
+SAVE_WEIGHTS()
+
 
 
 # ex=np.load('C:\Users\Vahid\Desktop\k100b20.npy')
