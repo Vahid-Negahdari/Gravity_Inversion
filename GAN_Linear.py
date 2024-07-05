@@ -16,7 +16,7 @@ num_batch    = int(BIGG_BATCH/batch_size)
 lr1          = 0.0005
 lr2          = 0.0005
 n            = 51
-k            = 30
+k            = 200
 semi         = int(np.ceil(n/8)*np.ceil(n/8)*128)
 #########################################################
 # Import Data
@@ -110,7 +110,7 @@ def train_step(Real,lr1,lr2):
         Fake        = Generator(Noise)
         Real_output = Discriminator(Real)
         Fake_output = Discriminator(Fake)
-        Loss_G      = 1.5*Generator_loss(Fake_output)
+        Loss_G      = Generator_loss(Fake_output)
         Loss_Real, Loss_Fake, Loss_D  = Discriminator_loss(Real_output, Fake_output)
 
     grad_G = g_tape.gradient(Loss_G, GenV )
