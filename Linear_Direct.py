@@ -6,7 +6,7 @@ path = Path('G:\projet\Gravity Density Inversion')
 #########################################################
 # Define Hyperparameter
 #########################################################
-train_epochs = 35
+train_epochs = 40
 batch_size   = 25
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
@@ -19,7 +19,6 @@ semi         = int(np.ceil(2*n/8)*128)
 A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
 Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)
-Gravity = np.expand_dims(Gravity,axis=2)
 #Gravity = (Gravity-np.min(Gravity))/(np.max(Gravity)-np.min(Gravity))
 #########################################################
 # Define Some Functions
@@ -41,10 +40,7 @@ def get_tfVariable(shape, name):
     return tf.Variable(tf.keras.initializers.GlorotNormal(seed=14)(shape), name=name, trainable=True, dtype=tf.float32)
 
 weights=[]
-weights = weights + [get_tfVariable([3,1,32],   'W0')]
-weights = weights + [get_tfVariable([3,32,64],  'W1')]
-weights = weights + [get_tfVariable([3,64,128],  'W3')]
-weights = weights + [get_tfVariable([semi,n**2],'W5')]
+weights = weights + [get_tfVariable([2*n,n**2],'W5')]
 weights = weights + [get_tfVariable([n**2],   'W6')]
 
 
@@ -52,12 +48,7 @@ weights = weights + [get_tfVariable([n**2],   'W6')]
 # Define Model
 ########################################################
 def Model(u):
-    C = conv(u, weights[0],2)
-    C = conv(C, weights[1],2)
-    C = conv(C, weights[2],2)
-#    C = conv(C, weights[3],2)
-    C = tf.reshape(C,[C.shape[0],semi])
-    C = fullyConnected_layer(C, weights[3], weights[4])
+    C = fullyConnected_layer(u, weights[0], weights[1])
     return C
 
 #########################################################
@@ -65,19 +56,18 @@ def Model(u):
 #########################################################
 def loss_function(y_pred, y_true ,g):
      Loss1 = tf.reduce_mean(tf.square(y_pred- y_true))
-     Loss2 = tf.reduce_mean(tf.square(tf.matmul(y_pred,A)-g[:,:,0] ))
+     Loss2 = 0#tf.reduce_mean(tf.square(tf.matmul(y_pred,A)-g[:,:,0] ))
      Loss = Loss1 + Loss2
      return  Loss, Loss1, Loss2
-
 #######################################################
 #######################################################
-def Update_weights(grads, lr):
-    for i in range(5):
-        weights[i].assign_sub(lr * grads[i])
-#        s, u, v = tf.linalg.svd(weights[i])
-#        weights[i].assign(tf.matmul(u, v, transpose_b=True))
-        # W_new = -lr*(grads[i] - tf.matmul(tf.matmul(weights[i],grads[i],transpose_a=True,transpose_b=True),weights[i] ))/2
-        # weights[i].assign_add(W_new)
+# def Update_weights(grads, lr):
+#     for i in range(5):
+#         weights[i].assign_sub(lr * grads[i])
+# #        s, u, v = tf.linalg.svd(weights[i])
+# #        weights[i].assign(tf.matmul(u, v, transpose_b=True))
+#         # W_new = -lr*(grads[i] - tf.matmul(tf.matmul(weights[i],grads[i],transpose_a=True,transpose_b=True),weights[i] ))/2
+#         # weights[i].assign_add(W_new)
 
 
 
@@ -108,7 +98,7 @@ for epoch in range(train_epochs):
       avg_Loss = 0
       avg_Loss1 = 0
       avg_Loss2 = 0
-      if np.mod(epoch,2)==0:
+      if np.mod(epoch,3)==0:
          lr=lr/2
 
       for s in range(num_batch):
