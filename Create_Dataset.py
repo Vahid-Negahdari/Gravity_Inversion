@@ -31,6 +31,7 @@ Density = np.load(path / ('Density_Train.npy' ), allow_pickle=True)
 Gravity = tf.transpose(tf.matmul(A,Density.T)).numpy()
 np.save(path / ('Gravity.npy'), Gravity)
 np.save(path / ('A.npy'), A)
+np.save(path / ('Density.npy'), Density)
 
 
 
