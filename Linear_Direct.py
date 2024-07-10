@@ -10,7 +10,7 @@ train_epochs = 40
 batch_size   = 25
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
-lr           = 0.0002
+lr           = 0.002
 n            = 51
 semi         = int(np.ceil(2*n/8)*128)
 #########################################################
@@ -55,7 +55,7 @@ def Model(u):
 # Define Loss Function
 #########################################################
 def loss_function(y_pred, y_true ,g):
-     Loss1 = tf.reduce_mean(tf.square(y_pred- y_true))
+     Loss1 = tf.reduce_mean(tf.abs(y_pred- y_true))
      Loss2 = 0#tf.reduce_mean(tf.square(tf.matmul(y_pred,A)-g[:,:,0] ))
      Loss = Loss1 + Loss2
      return  Loss, Loss1, Loss2
