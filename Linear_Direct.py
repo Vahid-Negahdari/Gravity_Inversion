@@ -16,7 +16,7 @@ semi         = int(np.ceil(2*n/8)*128)
 #########################################################
 # Import Data
 #########################################################
-A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
+#A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
 Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)
 #Gravity = (Gravity-np.min(Gravity))/(np.max(Gravity)-np.min(Gravity))
