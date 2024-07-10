@@ -65,8 +65,8 @@ def Model(u):
 # Define Loss Function
 #########################################################
 def loss_function(y_pred, y_true ,g):
-     Loss1 = tf.reduce_mean(tf.square(y_pred- y_true))
-     Loss2 = tf.reduce_mean(tf.square(tf.matmul(y_pred,A)-g[:,:,0] ))
+     Loss1 = tf.reduce_mean(tf.abs(y_pred- y_true))
+     Loss2 = 0#tf.reduce_mean(tf.square(tf.matmul(y_pred,A)-g[:,:,0] ))
      Loss = Loss1 + Loss2
      return  Loss, Loss1, Loss2
 
