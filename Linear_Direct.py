@@ -10,7 +10,7 @@ train_epochs = 40
 batch_size   = 25
 BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
-lr           = 0.02
+lr           = 0.002
 n            = 51
 semi         = int(np.ceil(2*n/8)*128)
 #########################################################
