@@ -4,6 +4,7 @@ from pathlib import Path
 
 
 path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
+#path = Path('G:\projet\Gravity Density Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
@@ -26,7 +27,7 @@ A1 = (h**2)*XXX/((XXX**2 + YYY**2)**(3/3))
 A2 = (h**2)*YYY/((XXX**2 + YYY**2)**(3/3))
 A  = np.concatenate((A1,A2),axis=0).astype('float32')
 
-Density = np.load(path / ('Density.npy' ), allow_pickle=True)
+Density = np.load(path / ('Density_Train.npy' ), allow_pickle=True)
 Gravity = tf.transpose(tf.matmul(A,Density.T)).numpy()
 np.save(path / ('Gravity.npy'), Gravity)
 np.save(path / ('A.npy'), A)
