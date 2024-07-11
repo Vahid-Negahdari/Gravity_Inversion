@@ -28,7 +28,7 @@ Gravity = np.expand_dims(Gravity,axis=2)
 #########################################################
 def conv(input, w, stride):
     y = tf.nn.conv1d(input=input, filters=w, stride=stride,padding='SAME')
-    y = tf.nn.relu(y)
+    y = tf.nn.leaky_relu(y)
     return y
 
 
@@ -46,7 +46,9 @@ weights=[]
 weights = weights + [get_tfVariable([3,1,32],   'W0')]
 weights = weights + [get_tfVariable([3,32,64],  'W1')]
 weights = weights + [get_tfVariable([3,64,128],  'W3')]
-weights = weights + [get_tfVariable([semi,n**2],'W5')]
+weights = weights + [get_tfVariable([semi,semi2],'W5')]
+weights = weights + [get_tfVariable([semi2],   'W6')]
+weights = weights + [get_tfVariable([semi2,n**2],'W5')]
 weights = weights + [get_tfVariable([n**2],   'W6')]
 
 
@@ -60,7 +62,8 @@ def Model(u):
 #    C = conv(C, weights[3],2)
     C = tf.reshape(C,[C.shape[0],semi])
     C = fullyConnected_layer(C, weights[3], weights[4])
-#    C = fullyConnected_layer(C, weights[5], weights[6])
+    C = tf.nn.leaky_relu(C)
+    C = fullyConnected_layer(C, weights[5], weights[6])
     return C
 
 #########################################################
