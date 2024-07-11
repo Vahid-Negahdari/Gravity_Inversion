@@ -30,7 +30,7 @@ def conv(input, w, stride):
 
 
 def fullyConnected_layer(input,w,b):
-  y = tf.matmul(input,w) + 0*b
+  y = tf.matmul(input,w) + b
   return y
 
 #########################################################
