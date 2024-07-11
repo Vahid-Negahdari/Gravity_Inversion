@@ -13,7 +13,7 @@ BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
 lr           = 0.002
 n            = 51
-semi         = int(np.ceil(1*n/8)*128)
+semi         = int(np.ceil(2*n/8)*128)
 semi2        = int((n**2)/2)
 #########################################################
 # Import Data
