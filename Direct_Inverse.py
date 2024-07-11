@@ -20,7 +20,7 @@ semi2        = int((n**2)/2)
 #########################################################
 A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)[:,51:102]
+Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)[:,0:51]
 Gravity = np.expand_dims(Gravity,axis=2)
 #Gravity = (Gravity-np.min(Gravity))/(np.max(Gravity)-np.min(Gravity))
 #########################################################
