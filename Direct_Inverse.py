@@ -13,14 +13,14 @@ BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
 lr           = 0.002
 n            = 51
-semi         = int(np.ceil(2*n/8)*128)
+semi         = int(np.ceil(1*n/8)*128)
 semi2        = int((n**2)/2)
 #########################################################
 # Import Data
 #########################################################
 A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)
+Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)[:,51:102]
 Gravity = np.expand_dims(Gravity,axis=2)
 #Gravity = (Gravity-np.min(Gravity))/(np.max(Gravity)-np.min(Gravity))
 #########################################################
@@ -40,7 +40,7 @@ def fullyConnected_layer(input,w,b):
 # Define Weights
 #########################################################
 def get_tfVariable(shape, name):
-    return tf.Variable(tf.keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)(shape), name=name, trainable=True, dtype=tf.float32)
+    return tf.Variable(tf.keras.initializers.GlorotNormal(seed=14)(shape), name=name, trainable=True, dtype=tf.float32)
 
 weights=[]
 weights = weights + [get_tfVariable([3,1,32],   'W0')]
