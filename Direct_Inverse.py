@@ -20,8 +20,10 @@ semi2        = int((n**2)/2)
 #########################################################
 A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Gravity = np.load(path / ('Gravity.npy'), allow_pickle=True)[:,0:51]
-Gravity = np.expand_dims(Gravity,axis=2)
+G       = np.load(path / ('Gravity.npy'), allow_pickle=True)
+Gravity = np.zeros([28000,n,2])
+Gravity[:,:,0] = G[:,0:51]     ;    Gravity[:,:,1] = G[:,51:101]
+#Gravity = np.expand_dims(Gravity,axis=2)
 #Gravity = (Gravity-np.min(Gravity))/(np.max(Gravity)-np.min(Gravity))
 #########################################################
 # Define Some Functions
@@ -43,7 +45,7 @@ def get_tfVariable(shape, name):
     return tf.Variable(tf.keras.initializers.GlorotNormal(seed=14)(shape), name=name, trainable=True, dtype=tf.float32)
 
 weights=[]
-weights = weights + [get_tfVariable([3,1,32],   'W0')]
+weights = weights + [get_tfVariable([3,2,32],   'W0')]
 weights = weights + [get_tfVariable([3,32,64],  'W1')]
 weights = weights + [get_tfVariable([3,64,128],  'W3')]
 weights = weights + [get_tfVariable([semi,n**2],'W5')]
