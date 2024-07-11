@@ -40,7 +40,7 @@ def fullyConnected_layer(input,w,b):
 # Define Weights
 #########################################################
 def get_tfVariable(shape, name):
-    return tf.Variable(tf.keras.initializers.RandomNormal(mean=0.0, stddev=0.005, seed=None)(shape), name=name, trainable=True, dtype=tf.float32)
+    return tf.Variable(tf.keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)(shape), name=name, trainable=True, dtype=tf.float32)
 
 weights=[]
 weights = weights + [get_tfVariable([3,1,32],   'W0')]
