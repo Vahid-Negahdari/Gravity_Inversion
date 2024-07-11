@@ -28,7 +28,7 @@ Gravity = np.expand_dims(Gravity,axis=2)
 #########################################################
 def conv(input, w, stride):
     y = tf.nn.conv1d(input=input, filters=w, stride=stride,padding='SAME')
-    y = tf.nn.tanh(y)
+    y = tf.nn.relu(y)
     return y
 
 
