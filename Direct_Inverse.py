@@ -45,7 +45,7 @@ def get_tfVariable(shape, name):
     return tf.Variable(tf.keras.initializers.GlorotNormal(seed=14)(shape), name=name, trainable=True, dtype=tf.float32)
 
 weights=[]
-weights = weights + [get_tfVariable([3,2,32],   'W0')]
+weights = weights + [get_tfVariable([3,1,32],   'W0')]
 weights = weights + [get_tfVariable([3,32,64],  'W1')]
 weights = weights + [get_tfVariable([3,64,128],  'W3')]
 weights = weights + [get_tfVariable([semi,n**2],'W5')]
