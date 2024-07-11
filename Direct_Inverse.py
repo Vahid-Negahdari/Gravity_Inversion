@@ -40,15 +40,13 @@ def fullyConnected_layer(input,w,b):
 # Define Weights
 #########################################################
 def get_tfVariable(shape, name):
-    return tf.Variable(tf.keras.initializers.GlorotNormal(seed=14)(shape), name=name, trainable=True, dtype=tf.float32)
+    return tf.Variable(tf.keras.initializers.RandomNormal(mean=0.0, stddev=0.005, seed=None)(shape), name=name, trainable=True, dtype=tf.float32)
 
 weights=[]
 weights = weights + [get_tfVariable([3,1,32],   'W0')]
 weights = weights + [get_tfVariable([3,32,64],  'W1')]
 weights = weights + [get_tfVariable([3,64,128],  'W3')]
-weights = weights + [get_tfVariable([semi,semi2],'W5')]
-weights = weights + [get_tfVariable([semi2],   'W6')]
-weights = weights + [get_tfVariable([semi2,n**2],'W5')]
+weights = weights + [get_tfVariable([semi,n**2],'W5')]
 weights = weights + [get_tfVariable([n**2],   'W6')]
 
 
@@ -62,8 +60,7 @@ def Model(u):
 #    C = conv(C, weights[3],2)
     C = tf.reshape(C,[C.shape[0],semi])
     C = fullyConnected_layer(C, weights[3], weights[4])
-    C = tf.nn.leaky_relu(C)
-    C = fullyConnected_layer(C, weights[5], weights[6])
+
     return C
 
 #########################################################
