@@ -13,14 +13,14 @@ BIGG_BATCH   = 27000
 num_batch    = int(BIGG_BATCH/batch_size)
 lr           = 0.002
 n            = 51
-semi         = int(np.ceil(2*n/8)*128)
+semi         = int(np.ceil(1*n/8)*128)
 semi2        = int((n**2)/2)
 #########################################################
 # Import Data
 #########################################################
 A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Gravity       = np.load(path / ('Gravity.npy'), allow_pickle=True)
+Gravity       = np.load(path / ('Gravity.npy'), allow_pickle=True)[:,n:n**2]
 #Gravity = np.zeros([27000,n,2]).astype('float32')
 #Gravity[:,:,0] = G[:,0:n]     ;    Gravity[:,:,1] = G[:,n:2*n]
 Gravity = np.expand_dims(Gravity,axis=2)
@@ -113,7 +113,7 @@ for epoch in range(train_epochs):
       avg_Loss = 0
       avg_Loss1 = 0
       avg_Loss2 = 0
-      if np.mod(epoch,3)==0:
+      if np.mod(epoch,2)==0:
          lr=lr/2
 
       for s in range(num_batch):
