@@ -8,7 +8,7 @@ path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
-n=51   ; l=500 ; h=(2*l)/(n-1)
+n=51   ; l=0.500 ; h=(2*l)/(n-1)
 
 dim1 = np.linspace(-l, l, n)
 dim2 = np.linspace(-l, l, n)
@@ -20,7 +20,7 @@ YYY  = np.zeros([n,n**2])
 
 for i in range(n):
    XXX[i,:] = XX[i]-XX
-   YYY[i,:] = YY[i]-h/100-YY
+   YYY[i,:] = YY[i]-h/1-YY
 
 
 A1 = (h**2)*XXX/((XXX**2 + YYY**2)**(1))
@@ -28,7 +28,7 @@ A2 = (h**2)*YYY/((XXX**2 + YYY**2)**(1))
 A  = np.concatenate((A1,A2),axis=0).astype('float32')
 
 Density = np.load(path / ('Density_Train.npy' ), allow_pickle=True)
-Gravity = tf.transpose(tf.matmul(A,Density.T)).numpy()*0.001
+Gravity = tf.transpose(tf.matmul(A,Density.T)).numpy()
 np.save(path / ('Gravity.npy'), Gravity)
 np.save(path / ('A.npy'), A)
 np.save(path / ('Density.npy'), Density)
