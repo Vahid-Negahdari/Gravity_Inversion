@@ -154,7 +154,7 @@ for epoch in range(train_epochs):
 
 
 def SAVE_WEIGHTS():
-    file_name = "Weights_Gen.pkl"
+    file_name = "Weights_Gen1.pkl"
     open_file = open(file_name, "wb")
     pickle.dump(GenV, open_file)
     open_file.close()
