@@ -8,19 +8,19 @@ path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
-n=51   ; l=20 ; h=(2*l)/(n-1)
+n=51   ; l=10 ; h=(2*l)/(n-1)
 
 dim1 = np.linspace(-l, l, n)
 dim2 = np.linspace(-l, l, n)
-X,Y  = np.meshgrid(dim1, dim2)
+X,Y  = np.meshgrid(dim1, -dim2)
 XX   = np.reshape(X,[n*n])
 YY   = np.reshape(Y,[n*n])
 XXX  = np.zeros([n,n**2])
 YYY  = np.zeros([n,n**2])
 
 for i in range(n):
-   XXX[i,:] = XX[i]-XX
-   YYY[i,:] = YY[i]-10*h-YY
+   XXX[i,:] = XX-XX[i]
+   YYY[i,:] = YY-YY[i]-h
 
 
 A1 = (h**2)*XXX/((XXX**2 + YYY**2)**(1))
