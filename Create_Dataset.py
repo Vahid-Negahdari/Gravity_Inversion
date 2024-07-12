@@ -8,7 +8,7 @@ path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
-n=51   ; l=0.100 ; h=(2*l)/(n-1)
+n=51   ; l=20 ; h=(2*l)/(n-1)
 
 dim1 = np.linspace(-l, l, n)
 dim2 = np.linspace(-l, l, n)
