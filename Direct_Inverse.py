@@ -113,7 +113,7 @@ for epoch in range(train_epochs):
       avg_Loss = 0
       avg_Loss1 = 0
       avg_Loss2 = 0
-      if np.mod(epoch,2)==0:
+      if np.mod(epoch,3)==0:
          lr=lr/2
 
       for s in range(num_batch):
