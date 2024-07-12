@@ -152,6 +152,16 @@ for epoch in range(train_epochs):
 
 
 
+
+def SAVE_WEIGHTS():
+    file_name = "Weights_Gen.pkl"
+    open_file = open(file_name, "wb")
+    pickle.dump(GenV, open_file)
+    open_file.close()
+
+
+SAVE_WEIGHTS()
+
 Noise = np.random.normal(0, 1, [1000, k]).astype('float32')
 Gen   = Generator(Noise)
 np.save(path / ('k100b20.npy'), Gen)
