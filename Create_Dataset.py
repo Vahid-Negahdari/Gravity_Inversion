@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 
 
-path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
-#path = Path('G:\projet\Gravity Density Inversion')
+#path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
+path = Path('G:\projet\Gravity Density Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
@@ -20,7 +20,7 @@ YYY  = np.zeros([n,n**2])
 
 for i in range(n):
    XXX[i,:] = XX[i]-XX
-   YYY[i,:] = YY[i]-h/1-YY
+   YYY[i,:] = YY[i]-10*h-YY
 
 
 A1 = (h**2)*XXX/((XXX**2 + YYY**2)**(1))
