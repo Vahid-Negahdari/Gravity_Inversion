@@ -3,12 +3,12 @@ import numpy as np
 from pathlib import Path
 
 
-path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
-#path = Path('G:\projet\Gravity Density Inversion')
+#path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
+path = Path('G:\projet\Gravity Density Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
-n=51   ; l=0.500 ; h=(2*l)/(n-1)
+n=51   ; l=0.100 ; h=(2*l)/(n-1)
 
 dim1 = np.linspace(-l, l, n)
 dim2 = np.linspace(-l, l, n)
