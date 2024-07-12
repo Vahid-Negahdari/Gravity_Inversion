@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 
 
-#path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
-path = Path('G:\projet\Gravity Density Inversion')
+path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
+#path = Path('G:\projet\Gravity Density Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
