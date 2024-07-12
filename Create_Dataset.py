@@ -20,7 +20,7 @@ YYY  = np.zeros([n,n**2])
 
 for i in range(n):
    XXX[i,:] = XX[i]-XX
-   YYY[i,:] = YY[i]-h-YY
+   YYY[i,:] = YY[i]-h/100-YY
 
 
 A1 = (h**2)*XXX/((XXX**2 + YYY**2)**(1))
