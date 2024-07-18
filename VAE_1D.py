@@ -23,7 +23,7 @@ lr             = 0.0001
 
 path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Density = -np.expand_dims(Density, axis=2).astype('float32')
+Density = 1-np.expand_dims(Density, axis=2).astype('float32')
 
 
 
