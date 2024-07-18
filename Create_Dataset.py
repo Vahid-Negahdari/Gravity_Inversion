@@ -8,7 +8,7 @@ path = Path('G:\projet\Gravity Density Inversion')
 #########################################################
 # Set Domain Node
 #########################################################
-n=51   ; l=1 ; h=(2*l)/(n-1)
+n=51   ; l=5 ; h=(2*l)/(n-1)
 
 dim1 = np.linspace(-l, l, n)
 dim2 = np.linspace(-l, l, n)
@@ -27,11 +27,12 @@ A1 = (h**2)*XXX/((XXX**2 + YYY**2)**(1))
 A2 = (h**2)*YYY/((XXX**2 + YYY**2)**(1))
 A  = np.concatenate((A1,A2),axis=0).astype('float32')
 
-# Density = np.load(path / ('Density.npy' ), allow_pickle=True)
-# Gravity = tf.transpose(tf.matmul(A,Density.T)).numpy()
-# np.save(path / ('Gravity.npy'), Gravity)
-# np.save(path / ('A.npy'), A)
-# np.save(path / ('Density.npy'), Density)
+Density = np.load(path / ('Density.npy' ), allow_pickle=True)[0:27000]
+Density = (Density-np.min(Density))/(np.max(Density)-np.min(Density))
+Gravity = tf.transpose(tf.matmul(A,Density.T)).numpy()
+np.save(path / ('Gravity.npy'), Gravity)
+np.save(path / ('A.npy'), A)
+np.save(path / ('Density_G.npy'), Density)
 
 
 

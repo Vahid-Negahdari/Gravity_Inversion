@@ -1,9 +1,10 @@
 import tensorflow as tf
+import tensorflow_probability as tfp
 import numpy as np
 from pathlib import Path
 
-#path = Path('G:\projet\Gravity Density Inversion')
-path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
+path = Path('G:\projet\Gravity Density Inversion')
+#path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 #########################################################
 # Define Hyperparameter
 #########################################################
@@ -19,7 +20,7 @@ semi2        = int((n**2)/2)
 # Import Data
 #########################################################
 A       = tf.transpose(tf.constant(np.load(path / ('A.npy'), allow_pickle=True)))
-Density = np.load(path / ('Density.npy'), allow_pickle=True)
+Density = np.load(path / ('Density_G.npy'), allow_pickle=True)
 Gravity       = np.load(path / ('Gravity.npy'), allow_pickle=True)
 #Gravity = np.zeros([27000,n,2]).astype('float32')
 #Gravity[:,:,0] = G[:,0:n]     ;    Gravity[:,:,1] = G[:,n:2*n]
