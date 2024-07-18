@@ -7,7 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 
-train_epochs    = 30
+train_epochs    = 25
 batch_size      = 25
 BIGG_BATCH      = 27000
 num_BIGG_BATCH  = 1
@@ -23,7 +23,7 @@ lr             = 0.0001
 
 path = Path('/home/cvl/Pycharm/Gravity_Density_Inversion')
 Density = np.load(path / ('Density.npy'), allow_pickle=True)
-Density = 1-np.expand_dims(Density, axis=2).astype('float32')
+Density = np.expand_dims(Density, axis=2).astype('float32')
 
 
 
@@ -160,7 +160,7 @@ for EPOCH in range(train_epochs):
         print("\n")
 
 def SAVE_WEIGHTS():
-    file_name = "Weights_VAE1.pkl"
+    file_name = "Weights_VAE2.pkl"
     open_file = open(file_name, "wb")
     pickle.dump(weights, open_file)
     open_file.close()
