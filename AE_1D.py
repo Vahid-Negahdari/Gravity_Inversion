@@ -7,7 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 
-train_epochs    = 20
+train_epochs    = 25
 batch_size      = 25
 BIGG_BATCH      = 27000
 num_BIGG_BATCH  = 1
@@ -50,7 +50,7 @@ def fullyConnected_layer(input,w,b):
 
 
 def SAVE_WEIGHTS():
-    file_name = "Weights_VAE2.pkl"
+    file_name = "Weights_AE2.pkl"
     open_file = open(file_name, "wb")
     pickle.dump(weights, open_file)
     open_file.close()
@@ -73,8 +73,8 @@ weights = weights + [get_tfVariable([Z],  'W12')]
 
 weights = weights + [get_tfVariable([Z,latent_space],'W5')]
 weights = weights + [get_tfVariable([latent_space],  'W12')]
-weights = weights + [get_tfVariable([Z,latent_space], 'W6')]
-weights = weights + [get_tfVariable([latent_space],  'W13')]
+# weights = weights + [get_tfVariable([Z,latent_space], 'W6')]
+# weights = weights + [get_tfVariable([latent_space],  'W13')]
 
 ################################### decode Density
 weights = weights + [get_tfVariable([latent_space,Z], 'W7')]
@@ -90,14 +90,6 @@ weights = weights + [get_tfVariable([3,1,32],  'W12')]
 
 
 
-def latent_sample(L):
-    # L = [mu,var]
-    eps     = 1*np.random.normal(0,1,[latent_space])
-    sample = L[0] + tf.math.exp(L[1]/2) * eps
-    return sample
-
-
-
 def encode( C):
      C = conv(C, weights[0], 2)
      C = conv(C, weights[1], 2)
@@ -106,28 +98,25 @@ def encode( C):
      C = fullyConnected_layer(C, weights[3], weights[4])
      C = tf.nn.leaky_relu(C, alpha=1)
 
-     mu = fullyConnected_layer(C, weights[5], weights[6])
-     var = fullyConnected_layer(C, weights[7], weights[8])
-     return [mu,var]
+     latent = fullyConnected_layer(C, weights[5], weights[6])
+     return latent
 
 
 def decode( C ):
-    C = fullyConnected_layer(C, weights[9], weights[10])
+    C = fullyConnected_layer(C, weights[7], weights[8])
     C = tf.nn.leaky_relu(C, alpha=1)
-    C = fullyConnected_layer(C, weights[11], weights[12])
+    C = fullyConnected_layer(C, weights[9], weights[10])
 
     C = tf.reshape(C, [C.shape[0], int(np.ceil(N / 4)), 128])
-    C = deconv(C, weights[13],1,[C.shape[0],int(np.ceil(N/4)),64])
-    C = deconv(C, weights[14], 2, [C.shape[0], int(np.ceil(N / 2)), 32])
-    C = deconv(C, weights[15], 2, [C.shape[0], N, 1])
+    C = deconv(C, weights[11],1,[C.shape[0],int(np.ceil(N/4)),64])
+    C = deconv(C, weights[12], 2, [C.shape[0], int(np.ceil(N / 2)), 32])
+    C = deconv(C, weights[13], 2, [C.shape[0], N, 1])
     return C
 
 
-def loss_function(L, y_pred, y_true):
-    Loss1 = tf.reduce_mean(tf.square(y_pred - y_true))
-    Loss2 = tf.reduce_mean(0.5 * tf.reduce_sum( tf.math.exp(L[1]) + L[0]**2 - L[1] ,axis=1))
-    Loss  = 1000*Loss1 + 1*Loss2
-    return  [Loss1,Loss2,Loss]
+def loss_function(y_pred, y_true):
+    Loss = tf.reduce_mean(tf.square(y_pred - y_true))
+    return  Loss
 
 
 
@@ -136,31 +125,27 @@ def train_step(x_input, lr ):
     optimizer = tf.keras.optimizers.Adam(learning_rate=lr)
     with tf.GradientTape() as tape:
         L = encode(x_input)
-        sample = latent_sample(L)
-        preds = decode(sample)
-        [Loss1, Loss2, Loss] = loss_function(L, x_input, preds)
+        preds = decode(L)
+        Loss  = loss_function(x_input, preds)
         grads = tape.gradient(Loss, weights)
         optimizer.apply_gradients(zip(grads, weights))
-        return [Loss1,Loss2,Loss]
+        return Loss
 
 ########################################################################################################################
 ########################################################################################################################
 ########################################################################################################################
 for EPOCH in range(train_epochs):
-
-        avg_Loss1 = 0 ; avg_Loss2 = 0 ; avg_Loss = 0
+        avg_Loss = 0
         if np.mod(EPOCH, 2) == 0:
             lr = lr / 2
 
         for j in range(num_batch):
             batch_x = Density[j * batch_size: (j + 1) * batch_size, :, :]
-            [Loss1, Loss2, Loss] = train_step(batch_x, lr)
+            Loss    = train_step(batch_x, lr)
             avg_Loss  += (Loss / (num_batch))
-            avg_Loss1 += (Loss1 / (num_batch))
-            avg_Loss2 += (Loss2 / (num_batch))
 
         print("--- On DENSITY epoch $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ {} ---".format(EPOCH))
-        tf.print(" ---Loss:---", avg_Loss, " ---Loss1:---", avg_Loss1, " ---Loss2:---", avg_Loss2)
+        tf.print(" ---Loss:---", avg_Loss)
         print("\n")
 
         if np.mod(EPOCH, 5) == 0:
