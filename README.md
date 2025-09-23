@@ -1,15 +1,8 @@
-# Elastic FWI : Physics-Guided Data-Driven Methods 
+# Gravity Inversion : Physics-Guided Data-Driven Methods 
 
 ## :art: About the project
-In this project, we present methods based on data-driven techniques for the time-harmonic Elastic
-Full-Waveform Inversion problem. Our project consists of several methods, including pure data-driven
-technique (First Method), the integrated application of deep learning and the physics underlying 
-the problem (Second Method) which includes several independent techniques, and a probabilistic
-deep learning technique (Third Method). The full paper for this source code can be found on [[1]](#1).\
-The dataset needed for this project [[2]](#2) is automatically uploaded within the codes. However, it's
-important to mention that for the second and third methods to be employed, a larger dataset
-had to be generated. Due to limitations on uploading data, we have included the necessary code
-for creating auxiliary datasets.
+In this project, we introduce data-driven approaches to address the Gravity Inversion problem. Our work explores three main strategies: a purely data-driven approach (First Method), a hybrid approach that combines generative models with the underlying physics of the problem (Second Method), and iterative schemes designed to refine the initial guess (Third Method). The full paper for this source code can be found on [[1]](#1).\
+The dataset needed for this project [[2]](#2) is automatically uploaded within the codes.
 ## :key: Getting Started
 Please follow the guidelines we've provided to use the code effectively.
 ### Requirements
@@ -58,13 +51,13 @@ python3 Third_Method_New_VAE.py
 
 ## :books: References 
 <a id="1">[1]</a> 
-V. Negahdari, S. R. Moghadasi, M. R. Razvan, Integrating Physics of the Problem into Data-Driven Methods to Enhance Elastic Full-Waveform Inversion with Uncertainty Quantification (2024). [arXiv:2406.05153](https://arxiv.org/abs/2406.05153).\
+To be announced
+. [arXiv](https://).\
 <a id="2">[2]</a> 
-Negahdari, Vahid (2024), “Elastic Full-Waveform-Inversion”,
-Mendeley Data, V1, [doi: 10.17632/z2n2f23pxw.1 ](https://data.mendeley.com/datasets/z2n2f23pxw/1)
+To be announced, [doi:](https://)
 
 ## :relaxed: Author  
-Vahid Negahdari
+Vahid Negahdari, Shirin Bahrami
 
 Email:  <vahid_negahdari@outlook.com>
 
