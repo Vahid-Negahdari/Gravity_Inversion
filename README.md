@@ -7,7 +7,7 @@ The dataset needed for this project [[2]](#2) is automatically uploaded within t
 Please follow the guidelines we've provided to use the code effectively.
 ### Requirements
 Please see the 
-[requirements.txt](https://github.com/Vahid-Negahdari/Inverse_Elastic_Scattering/blob/main/requirements.txt) 
+[requirements.txt](https://github.com/Vahid-Negahdari/Gravity_Inversion/blob/main/requirements.txt) 
 documentation for library and hardware requirements.
 ### Installing
 1. Clone the repository to your local machine:
