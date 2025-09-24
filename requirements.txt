@@ -1,0 +1,16 @@
+Hardware Requirements:
+
+- At Least 12 Gig Vram for GPU
+
+
+
+
+Library Requirements and Python Version:
+
+- Python          3.x
+- Tensorflow-gpu  2.x
+- Numpy
+- Scipy
+- zipfile
+- io
+- urllib
