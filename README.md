@@ -12,41 +12,36 @@ documentation for library and hardware requirements.
 ### Installing
 1. Clone the repository to your local machine:
 ``` 
-git clone https://github.com/Vahid-Negahdari/Elastic-Full-Waveforrm-Inversion.git
+git clone https://github.com/Vahid-Negahdari/Gravity_Inversion.git
 ```
 
 2. Change directory into the cloned repository:
 ``` 
-cd Elastic-Full-Waveforrm-Inversion
+cd Gravity_Inversion
 ```
 ### Executing program
 
 1.To execute the First Method, which is **Direct Deep Learning Inversion**:
 ``` 
-python3 First_Method_Direct_DL.py
+python3 First_Method_CNN.py
 ```
 2.To apply techniques within the Second Method, initially run:
 ``` 
-python3 Create_Dataset.py
-python3 Displacement_Approximation.py
+This code will be completed soon
 ```    
-* To utilize the **Least Square** technique, execute:
-  ``` 
-  python3 Second_Method_Least_Square.py
-  ```
-* To utilize the **Linear-to-Nonlinear** technique, execute:
-  ``` 
-  python3 RhoU_Approximation.py
-  python3 Second_Method_Linear_to_Nonlinear.py
-  ```  
-* To utilize the **Inverse Convolution** technique, execute:
+* To utilize the **GAN** generator, execute:
   ``` 
   This code will be completed soon
+  ```
+* To utilize the **Variational Autoencoder** generator, execute:
+  ```
+  This code will be completed soon
   ```  
-3.To utilize the Third Method, the **New-VAE** Method,
-you first need to execute the linear-to-nonlinear process and then follow up with:
+
+3.To utilize the Third Method, **Iterative Optimization**,
+you first need to execute the First Method process and then follow up with:
 ```
-python3 Third_Method_New_VAE.py
+This code will be completed soon
 ```
 
 ## :books: References 
@@ -56,7 +51,7 @@ To be announced
 <a id="2">[2]</a> 
 To be announced, [doi:](https://)
 
-## :relaxed: Author  
+## :relaxed: Authors  
 Vahid Negahdari, Shirin Bahrami
 
 Email:  <vahid_negahdari@outlook.com>
