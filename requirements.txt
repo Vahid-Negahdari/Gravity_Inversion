@@ -3,8 +3,6 @@ Hardware Requirements:
 - At Least 12 Gig Vram for GPU
 
 
-
-
 Library Requirements and Python Version:
 
 - Python          3.x
@@ -13,4 +11,5 @@ Library Requirements and Python Version:
 - Scipy
 - zipfile
 - io
+
 - urllib
