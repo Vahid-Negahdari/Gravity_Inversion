@@ -17,7 +17,6 @@ n          = 51
 train_size = 27000
 batch_size = 30
 num_batch  = int(train_size/batch_size)
-latent_dim = 50
 lr         = 1.0*1e-3
 
 
@@ -140,6 +139,7 @@ for epoch in range(0, epochs ):
 
     end_time = time.time()
     print('Epoch: {},  loss: {}, time elapse for current epoch: {}'.format(epoch, avg, end_time - start_time))
+
 
 
 
