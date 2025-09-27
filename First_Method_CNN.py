@@ -15,7 +15,7 @@ import time
 epochs     = 3000
 n          = 51
 train_size = 27000
-batch_size = 3
+batch_size = 30
 num_batch  = int(train_size/batch_size)
 latent_dim = 50
 lr         = 1.0*1e-3
@@ -28,14 +28,18 @@ lr         = 1.0*1e-3
 
 path = Path.cwd() /('Dataset')
 
-if path.is_dir() == False :
-   print('Downloading Dataset...')
-   url = "https://ieee-dataport.s3.amazonaws.com/data/1414691/94986/Gravity_Inversion.zip?versionId=Nb8O0XlmG_J7PVLouyC.h7yVyq4sy7gQ&response-content-disposition=attachment%3B%20filename%3D%22Gravity_Inversion.zip%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJOHYI4KJCE6Q7MIQ%2F20250925%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250925T121916Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=9f353ca018ec0da8aa8602b03da1830cf814c11318c25876f66bb0d8c8db548b"
-   http_response = urlopen(url)
-   archive = ZipFile(BytesIO(http_response.read()))
-   archive.extractall(path=path.parent)
-   (path.parent/('Gravity_Inversion')).rename('Dataset')
-   print('Download Completed.')
+if not path.exists():
+    print("Dataset not found. Downloading...")
+    url = "https://github.com/Vahid-Negahdari/Gravity_Inversion/releases/download/v1.0.0/Gravity_Inversion.zip"
+    try:
+        http_response = urlopen(url)
+        with ZipFile(BytesIO(http_response.read())) as archive:
+            archive.extractall(path)
+        print("Dataset downloaded and extracted to:", path)
+    except Exception as e:
+        print("Error while downloading dataset:", e)
+else:
+    print("Dataset already exists at:", path)
 
 
 
